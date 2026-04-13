@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bouazza Yassine — Portfolio</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#0f1014; --surface:#16181d; --surface2:#1c1f27;
+      --border:#252830; --text:#e4e6ed; --muted:#7a7f94; --faint:#3a3e4d;
+      --accent:#00b8c2; --abg:rgba(0,184,194,.08); --abd:rgba(0,184,194,.2);
+      --r:10px; --f:'Satoshi',system-ui,sans-serif;
+    }
+    [data-theme="light"] {
+      --bg:#f4f5f8; --surface:#fff; --surface2:#f0f1f5;
+      --border:#dde0ea; --text:#111318; --muted:#5c6077; --faint:#b8bcc9;
+      --accent:#0090a0; --abg:rgba(0,144,160,.08); --abd:rgba(0,144,160,.2);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{-webkit-font-smoothing:antialiased}
+    body{font-family:var(--f);font-size:1rem;line-height:1.65;color:var(--text);background:var(--bg);min-height:100dvh}
+    a{color:inherit;text-decoration:none}
+    ul{list-style:none}
+    button{cursor:pointer;font:inherit;background:none;border:none;color:inherit}
+    h1,h2,h3{line-height:1.2}
+    p{max-width:68ch}
+
+    .wrap{max-width:860px;margin-inline:auto;padding-inline:clamp(1.25rem,5vw,2.5rem)}
+
+    /* NAV */
+    nav{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:.85rem 0}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    .nav-logo{font-weight:700;font-size:.95rem;letter-spacing:.02em;flex-shrink:0}
+    .nav-logo span{color:var(--accent)}
+    .nav-links{display:flex;gap:.2rem}
+    .nav-links button{font-size:.825rem;color:var(--muted);font-weight:500;padding:.3rem .7rem;border-radius:6px;transition:color .15s,background .15s}
+    .nav-links button:hover{color:var(--text);background:var(--surface)}
+    .nav-links button.active{color:var(--accent);background:var(--abg)}
+    .nav-right{display:flex;align-items:center;gap:.6rem;flex-shrink:0}
+    .theme-btn{width:30px;height:30px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);transition:color .15s,border-color .15s}
+    .theme-btn:hover{color:var(--text);border-color:var(--muted)}
+    .hamburger{display:none;flex-direction:column;gap:4px;width:30px;height:30px;align-items:center;justify-content:center}
+    .hamburger span{display:block;width:18px;height:2px;background:var(--muted);border-radius:2px;transition:transform .2s,opacity .2s}
+    .hamburger.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+    .hamburger.open span:nth-child(2){opacity:0}
+    .hamburger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+    .mobile-nav{display:none;position:absolute;top:100%;left:0;right:0;z-index:90;background:var(--bg);border-bottom:1px solid var(--border);padding:.5rem 0}
+    .mobile-nav.open{display:block}
+    .mobile-nav button{display:block;width:100%;text-align:left;padding:.7rem clamp(1.25rem,5vw,2.5rem);font-size:.9rem;color:var(--muted);font-weight:500}
+    .mobile-nav button.active{color:var(--accent)}
+
+    /* PAGES */
+    .page{display:none;padding:3rem 0 4rem}
+    .page.active{display:block}
+
+    /* SHARED */
+    .page-label{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
+    .page-title{font-size:clamp(1.7rem,4vw,2.4rem);font-weight:700;letter-spacing:-.02em;margin-bottom:.75rem}
+    .page-sub{font-size:.95rem;color:var(--muted);line-height:1.75;margin-bottom:2rem}
+    .divider{height:1px;background:var(--border);margin:2.5rem 0}
+    .btn{display:inline-flex;align-items:center;gap:.4rem;padding:.55rem 1.25rem;font-size:.875rem;font-weight:600;border-radius:8px;transition:opacity .15s,background .15s,border-color .15s}
+    .btn-primary{background:var(--accent);color:#fff}
+    .btn-primary:hover{opacity:.85}
+    .btn-outline{border:1px solid var(--border);color:var(--muted)}
+    .btn-outline:hover{color:var(--text);border-color:var(--muted)}
+    .tag{font-size:.7rem;font-weight:600;padding:.18rem .55rem;border-radius:4px}
+    .ta{background:var(--abg);color:var(--accent)}
+    .tn{background:rgba(122,127,148,.1);color:var(--muted)}
+
+    /* ── HOME ── */
+    .hero-tag{display:inline-flex;align-items:center;gap:.45rem;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);background:var(--abg);padding:.25rem .75rem;border-radius:999px;border:1px solid var(--abd);margin-bottom:1.5rem}
+    .dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+    .hero h1{font-size:clamp(2.6rem,7vw,4.5rem);font-weight:700;letter-spacing:-.03em;margin-bottom:.9rem}
+    .hero h1 span{color:var(--accent)}
+    .hero-desc{font-size:1.05rem;color:var(--muted);max-width:50ch;line-height:1.75;margin-bottom:2rem}
+    .hero-desc strong{color:var(--text);font-weight:600}
+    .hero-btns{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:3rem}
+    .hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+    .stat{background:var(--surface);padding:1.1rem 1rem;display:flex;flex-direction:column;gap:.2rem}
+    .stat-val{font-size:1.3rem;font-weight:700;color:var(--accent);line-height:1}
+    .stat-lbl{font-size:.72rem;color:var(--muted)}
+
+    /* ── ABOUT ── */
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+    .about-text p{font-size:.95rem;color:var(--muted);line-height:1.8;margin-bottom:.85rem}
+    .about-text p strong{color:var(--text)}
+    .about-quote{border-left:3px solid var(--accent);padding-left:1rem;margin:1.25rem 0;font-size:.95rem;font-style:italic;color:var(--text)}
+    .about-cards{display:flex;flex-direction:column;gap:.7rem}
+    .acard{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1rem 1.15rem;display:flex;align-items:flex-start;gap:.8rem}
+    .acard-icon{font-size:1.2rem;flex-shrink:0;margin-top:.05rem}
+    .acard h3{font-size:.875rem;font-weight:700;margin-bottom:.2rem}
+    .acard p{font-size:.8rem;color:var(--muted);max-width:none}
+
+    /* ── SKILLS ── */
+    .skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:.75rem}
+    .skill-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.1rem 1.25rem}
+    .skill-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.65rem}
+    .skill-name{font-size:.875rem;font-weight:700;display:flex;align-items:center;gap:.4rem}
+    .skill-pct{font-size:.75rem;color:var(--accent);font-weight:700}
+    .bar-bg{height:3px;background:var(--border);border-radius:99px;overflow:hidden}
+    .bar-fill{height:100%;background:var(--accent);border-radius:99px}
+    .skill-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.7rem}
+    .skills-note{margin-top:1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1rem 1.25rem;font-size:.825rem;color:var(--muted);line-height:1.7}
+    .skills-note strong{color:var(--text)}
+
+    /* ── PROJECTS ── */
+    .proj-list{display:flex;flex-direction:column;gap:1rem}
+    .pcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem}
+    .pcard-header{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:.6rem}
+    .pcard-num{font-size:.7rem;font-weight:700;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.25rem}
+    .pcard-title{font-size:1.05rem;font-weight:700}
+    .status{flex-shrink:0;font-size:.7rem;font-weight:700;padding:.2rem .65rem;border-radius:999px}
+    .s-done{background:rgba(67,122,34,.15);color:#6daa45;border:1px solid rgba(67,122,34,.25)}
+    .s-wip{background:var(--abg);color:var(--accent);border:1px solid var(--abd)}
+    .pcard-desc{font-size:.875rem;color:var(--muted);line-height:1.7;max-width:65ch;margin-bottom:.9rem}
+    .pcard-tech{display:flex;flex-wrap:wrap;gap:.4rem}
+    .proj-github{margin-top:2rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+    .proj-github p{font-size:.875rem;color:var(--muted);max-width:none}
+    .proj-github p strong{color:var(--text)}
+    .proj-github a{display:inline-flex;align-items:center;gap:.5rem;font-size:.825rem;font-weight:700;color:var(--accent);border:1px solid var(--abd);padding:.4rem 1rem;border-radius:8px;transition:background .15s}
+    .proj-github a:hover{background:var(--abg)}
+
+    /* ── FORMATION ── */
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:start}
+    .timeline{padding-left:1.25rem;border-left:2px solid var(--border)}
+    .tl{position:relative;margin-bottom:2rem;padding-left:1rem}
+    .tl::before{content:'';position:absolute;left:calc(-1.25rem - 5px);top:.4rem;width:10px;height:10px;border-radius:50%;background:var(--bg);border:2px solid var(--border)}
+    .tl.current::before{background:var(--accent);border-color:var(--accent)}
+    .tl-date{font-size:.7rem;font-weight:700;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.2rem}
+    .tl-title{font-size:1rem;font-weight:700}
+    .tl-place{font-size:.825rem;color:var(--muted);margin-bottom:.4rem}
+    .tl-desc{font-size:.825rem;color:var(--muted);line-height:1.65;max-width:50ch}
+    .info-block{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:.75rem}
+    .info-block h3{font-size:.875rem;font-weight:700;margin-bottom:.75rem}
+    .tool-tags{display:flex;flex-wrap:wrap;gap:.4rem}
+    .obj-list{display:flex;flex-direction:column;gap:.5rem;margin-top:.1rem}
+    .obj-list li{font-size:.825rem;color:var(--muted);display:flex;gap:.5rem}
+    .obj-list li span{color:var(--accent);flex-shrink:0}
+
+    /* ── CONTACT ── */
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+    .clinks{display:flex;flex-direction:column;gap:.6rem}
+    .clink{display:flex;align-items:center;gap:.85rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:.9rem 1rem;transition:border-color .15s}
+    .clink:hover{border-color:var(--accent)}
+    .clink.disabled{pointer-events:none;opacity:.55}
+    .clink-icon{width:34px;height:34px;flex-shrink:0;border-radius:8px;background:var(--abg);display:flex;align-items:center;justify-content:center;color:var(--accent)}
+    .clink-label{font-size:.7rem;color:var(--muted)}
+    .clink-value{font-size:.825rem;font-weight:600}
+    .clink-badge{margin-left:auto;flex-shrink:0;font-size:.65rem;font-weight:700;color:var(--muted);background:rgba(122,127,148,.1);padding:.15rem .5rem;border-radius:999px}
+    .form-field{margin-bottom:1rem}
+    .form-field label{display:block;font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem}
+    .form-field input,.form-field textarea{width:100%;padding:.6rem .9rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:.875rem;color:var(--text);transition:border-color .15s;resize:vertical}
+    .form-field input:focus,.form-field textarea:focus{outline:none;border-color:var(--accent)}
+    .form-field textarea{min-height:110px}
+    .btn-send{width:100%;padding:.65rem;background:var(--accent);color:#fff;font-weight:700;font-size:.875rem;border-radius:8px;transition:opacity .15s}
+    .btn-send:hover{opacity:.85}
+    .btn-send:disabled{opacity:.6;cursor:not-allowed}
+
+    /* FOOTER */
+    .footer-bar{border-top:1px solid var(--border);margin-top:2rem;padding:1.5rem 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem}
+    .footer-bar p{font-size:.78rem;color:var(--faint)}
+    .footer-bar span{color:var(--accent)}
+    .footer-nav{display:flex;gap:1.25rem}
+    .footer-nav button{font-size:.78rem;color:var(--faint)}
+    .footer-nav button:hover{color:var(--muted)}
+
+    @media(max-width:680px){
+      .nav-links{display:none}
+      .hamburger{display:flex}
+      nav{position:relative}
+      .about-grid,.form-grid,.contact-grid{grid-template-columns:1fr}
+      .hero-stats{grid-template-columns:repeat(2,1fr)}
+    }
+  </style>
+</head>
+<body>
+
+<nav id="main-nav">
+  <div class="wrap nav-inner">
+    <button class="nav-logo" onclick="goTo('home')">Bouazza <span>Yassine</span></button>
+    <ul class="nav-links" role="list">
+      <li><button onclick="goTo('home')"      data-page="home">Accueil</button></li>
+      <li><button onclick="goTo('about')"     data-page="about">À propos</button></li>
+      <li><button onclick="goTo('skills')"    data-page="skills">Compétences</button></li>
+      <li><button onclick="goTo('projects')"  data-page="projects">Projets</button></li>
+      <li><button onclick="goTo('formation')" data-page="formation">Formation</button></li>
+      <li><button onclick="goTo('contact')"   data-page="contact">Contact</button></li>
+    </ul>
+    <div class="nav-right">
+      <button class="theme-btn" data-theme-toggle aria-label="Changer le thème">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="hamburger" id="hbg" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="mobile-nav" id="mnav">
+    <button onclick="goTo('home');cm()"      data-page="home">Accueil</button>
+    <button onclick="goTo('about');cm()"     data-page="about">À propos</button>
+    <button onclick="goTo('skills');cm()"    data-page="skills">Compétences</button>
+    <button onclick="goTo('projects');cm()"  data-page="projects">Projets</button>
+    <button onclick="goTo('formation');cm()" data-page="formation">Formation</button>
+    <button onclick="goTo('contact');cm()"   data-page="contact">Contact</button>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- ═══ HOME ═══ -->
+<div class="page active" id="page-home">
+  <section class="hero" style="padding:4rem 0 3rem">
+
+    <h1>Bouazza<br><span>Yassine</span></h1>
+    <p class="hero-desc">Étudiant en <strong>BUT Informatique</strong> à l'IUT d'Orsay.<br>La <strong>rigueur du code</strong>, la <strong>créativité du visuel</strong>.</p>
+    <div class="hero-btns">
+      <button class="btn btn-primary" onclick="goTo('projects')">Voir mes projets →</button>
+      <button class="btn btn-outline"  onclick="goTo('contact')">Me contacter</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-val">BUT</span><span class="stat-lbl">Informatique</span></div>
+      <div class="stat"><span class="stat-val">C++</span><span class="stat-lbl">Langage principal</span></div>
+      <div class="stat"><span class="stat-val">1ère</span><span class="stat-lbl">Année</span></div>
+      <div class="stat"><span class="stat-val">2</span><span class="stat-lbl">Compétences clés</span></div>
+    </div>
+  </section>
+  <div class="footer-bar">
+    <p>© 2026 <span>Bouazza Yassine</span>. Tous droits réservés.</p>
+    <nav class="footer-nav">
+      <button onclick="goTo('about')">À propos</button>
+      <button onclick="goTo('skills')">Compétences</button>
+      <button onclick="goTo('projects')">Projets</button>
+      <button onclick="goTo('contact')">Contact</button>
+    </nav>
+  </div>
+</div>
+
+<!-- ═══ À PROPOS ═══ -->
+<div class="page" id="page-about">
+  <p class="page-label">À propos</p>
+  <h1 class="page-title">Un profil hybride :<br>logique &amp; esthétique</h1>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>Je suis <strong>Bouazza Yassine</strong>, étudiant en première année de <strong>BUT Informatique</strong> à l'IUT d'Orsay. Mon parcours issu d'un <strong>Bac Technologique</strong> m'a appris à passer rapidement de la théorie à la pratique.</p>
+      <p>Je combine la <strong>rigueur du C++</strong> avec la créativité du <strong>montage vidéo</strong>. Je ne me contente pas de coder — je m'assure que le résultat est fluide et visuellement cohérent pour l'utilisateur.</p>
+      <blockquote class="about-quote">« Je préfère passer une heure de plus à comprendre un problème plutôt que de copier une solution sans la maîtriser. »</blockquote>
+      <p>En dehors du code, je suis passionné de <strong>sport en salle</strong> — les résultats viennent de la régularité, pas de la chance. Titulaire du <strong>permis B</strong>.</p>
+    </div>
+    <div class="about-cards">
+      <div class="acard"><span class="acard-icon">⚙️</span><div><h3>Rigueur technique</h3><p>C++, gestion mémoire, algorithmes — approche structurée et performante.</p></div></div>
+      <div class="acard"><span class="acard-icon">🎬</span><div><h3>Sensibilité créative</h3><p>Le montage vidéo m'apporte une vision UI/UX rare chez les développeurs.</p></div></div>
+      <div class="acard"><span class="acard-icon">💪</span><div><h3>Culture de l'effort</h3><p>Persévérance et régularité appliquées au code comme au sport.</p></div></div>
+      <div class="acard"><span class="acard-icon">🚀</span><div><h3>Agilité terrain</h3><p>Bac Techno : habitué à « faire et tester », opérationnel rapidement.</p></div></div>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <p style="font-size:.875rem;color:var(--muted)">Envie d'en savoir plus ? <button onclick="goTo('contact')" style="color:var(--accent);font-weight:600;font-size:.875rem">Contacte-moi →</button></p>
+  <div class="footer-bar"><p>© 2026 <span>Bouazza Yassine</span>. Tous droits réservés.</p></div>
+</div>
+
+<!-- ═══ COMPÉTENCES ═══ -->
+<div class="page" id="page-skills">
+  <p class="page-label">Compétences</p>
+  <h1 class="page-title">Mon stack technique</h1>
+  <p class="page-sub">Des langages systèmes aux outils créatifs — un profil hybride taillé pour le développement moderne.</p>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-top"><span class="skill-name">⚡ C++</span><span class="skill-pct">85%</span></div>
+      <div class="bar-bg"><div class="bar-fill" style="width:85%"></div></div>
+      <div class="skill-tags"><span class="tag ta">POO</span><span class="tag ta">Gestion mémoire</span><span class="tag tn">Algorithmes</span><span class="tag tn">Game Dev</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-top"><span class="skill-name">🐍 Python</span><span class="skill-pct">45%</span></div>
+      <div class="bar-bg"><div class="bar-fill" style="width:45%"></div></div>
+      <div class="skill-tags"><span class="tag tn">Algos simples</span><span class="tag tn">Mathématiques</span><span class="tag tn">Scripts</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-top"><span class="skill-name">🗄️ SQL / BDD</span><span class="skill-pct">65%</span></div>
+      <div class="bar-bg"><div class="bar-fill" style="width:65%"></div></div>
+      <div class="skill-tags"><span class="tag ta">SQLite</span><span class="tag tn">Modélisation</span><span class="tag tn">Requêtes</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-top"><span class="skill-name">🌐 JavaScript</span><span class="skill-pct">55%</span></div>
+      <div class="bar-bg"><div class="bar-fill" style="width:55%"></div></div>
+      <div class="skill-tags"><span class="tag tn">HTML/CSS</span><span class="tag tn">DOM</span><span class="tag tn">Front-end</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-top"><span class="skill-name">🎬 Montage vidéo</span><span class="skill-pct">80%</span></div>
+      <div class="bar-bg"><div class="bar-fill" style="width:80%"></div></div>
+      <div class="skill-tags"><span class="tag ta">UI sensibilité</span><span class="tag tn">Storytelling</span><span class="tag tn">Rendu visuel</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-top"><span class="skill-name">🔧 Outils Dev</span><span class="skill-pct">70%</span></div>
+      <div class="bar-bg"><div class="bar-fill" style="width:70%"></div></div>
+      <div class="skill-tags"><span class="tag tn">Git / GitHub</span><span class="tag tn">VS Code</span><span class="tag tn">Linux CLI</span></div>
+    </div>
+  </div>
+  <div class="skills-note">💡 <strong>Note :</strong> Python est utilisé principalement pour des <strong>algorithmes mathématiques simples</strong> dans le cadre du cursus BUT. Le niveau reflète l'usage réel.</div>
+  <div class="footer-bar"><p>© 2026 <span>Bouazza Yassine</span>. Tous droits réservés.</p></div>
+</div>
+
+<!-- ═══ PROJETS ═══ -->
+<div class="page" id="page-projects">
+  <p class="page-label">Projets</p>
+  <h1 class="page-title">Mes réalisations</h1>
+  <p class="page-sub">Des projets concrets qui reflètent ma double compétence : structure du code et cohérence visuelle.</p>
+  <div class="proj-list">
+    <div class="pcard">
+      <div class="pcard-header">
+        <div><div class="pcard-num">Projet 01</div><div class="pcard-title">Jeu Vidéo Complet en C++</div></div>
+        <span class="status s-done">✓ Terminé</span>
+      </div>
+      <p class="pcard-desc">Développement from scratch d'un jeu vidéo complet en C++. Un projet alliant rigueur mathématique, gestion fine de la mémoire et logique de game design. Code source disponible sur GitHub.</p>
+      <div class="pcard-tech"><span class="tag ta">C++</span><span class="tag ta">POO</span><span class="tag tn">Algorithmes</span><span class="tag tn">Game Design</span><span class="tag tn">Gestion mémoire</span></div>
+    </div>
+    <div class="pcard">
+      <div class="pcard-header">
+        <div><div class="pcard-num">Projet 02</div><div class="pcard-title">Montage Vidéo &amp; Création de Contenu</div></div>
+        <span class="status s-wip">En cours</span>
+      </div>
+      <p class="pcard-desc">Création et édition de contenus vidéo avec une attention particulière au rendu visuel et à la fluidité. Cette compétence m'apporte une sensibilité UI/UX que peu de développeurs possèdent.</p>
+      <div class="pcard-tech"><span class="tag ta">Montage</span><span class="tag tn">UI sensibilité</span><span class="tag tn">Storytelling</span><span class="tag tn">Rendu visuel</span></div>
+    </div>
+  </div>
+  <div class="proj-github">
+    <div>
+      <p style="font-weight:700;font-size:.875rem;margin-bottom:.25rem;color:var(--text)">Retrouve mes projets sur GitHub</p>
+      <p>Le code source du jeu vidéo C++ est disponible sur mon profil.</p>
+    </div>
+    <a href="https://github.com/ybouazz1" target="_blank" rel="noopener noreferrer">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77A5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+      github.com/ybouazz1
+    </a>
+  </div>
+  <div class="footer-bar"><p>© 2026 <span>Bouazza Yassine</span>. Tous droits réservés.</p></div>
+</div>
+
+<!-- ═══ FORMATION ═══ -->
+<div class="page" id="page-formation">
+  <p class="page-label">Formation</p>
+  <h1 class="page-title">Mon parcours</h1>
+  <p class="page-sub">Un chemin orienté terrain, de la technologie appliquée à l'informatique avancée.</p>
+  <div class="form-grid">
+    <div>
+      <div class="timeline">
+        <div class="tl current">
+          <div class="tl-date">2025 – Aujourd'hui</div>
+          <div class="tl-title">BUT Informatique — 1ère année</div>
+          <div class="tl-place">IUT d'Orsay, Université Paris-Saclay</div>
+          <div class="tl-desc">Algorithmique, bases de données, programmation C++, théorie des graphes, réseaux et systèmes.</div>
+        </div>
+        <div class="tl">
+          <div class="tl-date">2022 – 2025</div>
+          <div class="tl-title">Bac Technologique</div>
+          <div class="tl-place">Île-de-France</div>
+          <div class="tl-desc">Formation technique et pratique. Culture numérique, gestion de projet. Permis B obtenu.</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="info-block">
+        <h3>🛠️ Outils &amp; Environnement</h3>
+        <div class="tool-tags">
+          <span class="tag tn">VS Code</span><span class="tag tn">Git / GitHub</span><span class="tag tn">SQLite</span>
+          <span class="tag tn">Windows</span><span class="tag tn">Linux CLI</span><span class="tag tn">PowerShell</span>
+          <span class="tag tn">C++ (GCC)</span>
+        </div>
+      </div>
+      <div class="info-block">
+        <h3>🎯 Objectifs</h3>
+        <ul class="obj-list">
+          <li><span>▸</span>Décrocher un stage en développement logiciel ou jeu vidéo</li>
+          <li><span>▸</span>Approfondir le développement de jeux et les algorithmes</li>
+          <li><span>▸</span>Contribuer à des projets open source en C++</li>
+          <li><span>▸</span>Poursuivre en Master ou école d'ingénieurs</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bar"><p>© 2026 <span>Bouazza Yassine</span>. Tous droits réservés.</p></div>
+</div>
+
+<!-- ═══ CONTACT ═══ -->
+<div class="page" id="page-contact">
+  <p class="page-label">Contact</p>
+  <h1 class="page-title">Travaillons ensemble</h1>
+  <p class="page-sub">Un projet, une opportunité de stage, ou juste envie d'échanger ? N'hésite pas !</p>
+  <div class="contact-grid">
+    <div>
+      <div class="clinks">
+        <a href="mailto:yassine.bouazza@example.com" class="clink">
+          <div class="clink-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div><div class="clink-label">Email</div><div class="clink-value">yassine.bouazza9131@gmail.com</div></div>
+        </a>
+        <a href="https://github.com/ybouazz1" target="_blank" rel="noopener noreferrer" class="clink">
+          <div class="clink-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77A5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></div>
+          <div><div class="clink-label">GitHub</div><div class="clink-value">github.com/ybouazz1</div></div>
+        </a>
+        <div class="clink disabled">
+          <div class="clink-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
+          <div><div class="clink-label">LinkedIn</div><div class="clink-value">En cours de création</div></div>
+          <span class="clink-badge">Bientôt</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <form onsubmit="sendMsg(event)">
+        <div class="form-field"><label for="nom">Nom</label><input type="text" id="nom" placeholder="Votre nom" required autocomplete="name"></div>
+        <div class="form-field"><label for="mail">Email</label><input type="email" id="mail" placeholder="votre@email.com" required autocomplete="email"></div>
+        <div class="form-field"><label for="msg">Message</label><textarea id="msg" placeholder="Votre message..." required></textarea></div>
+        <button class="btn-send" id="send-btn" type="submit">Envoyer →</button>
+      </form>
+    </div>
+  </div>
+  <div class="footer-bar"><p>© 2026 <span>Bouazza Yassine</span>. Tous droits réservés.</p></div>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+const pages=['home','about','skills','projects','formation','contact'];
+let cur='home';
+function goTo(id){
+  if(!pages.includes(id))return;
+  document.getElementById('page-'+cur).classList.remove('active');
+  document.getElementById('page-'+id).classList.add('active');
+  cur=id;
+  document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.getAttribute('data-page')===id));
+  window.scrollTo({top:0,behavior:'instant'});
+}
+// Theme
+(function(){
+  const btn=document.querySelector('[data-theme-toggle]'),html=document.documentElement;
+  let t=html.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+  html.setAttribute('data-theme',t);
+  function sync(){btn.innerHTML=t==='dark'?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>':'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';}
+  sync();
+  btn.addEventListener('click',()=>{t=t==='dark'?'light':'dark';html.setAttribute('data-theme',t);sync();});
+})();
+// Hamburger
+const hbg=document.getElementById('hbg'),mnav=document.getElementById('mnav');
+hbg.addEventListener('click',()=>{const o=mnav.classList.toggle('open');hbg.classList.toggle('open',o);});
+function cm(){mnav.classList.remove('open');hbg.classList.remove('open');}
+// Form
+function sendMsg(e){e.preventDefault();const b=document.getElementById('send-btn');b.textContent='✓ Envoyé !';b.disabled=true;setTimeout(()=>{b.textContent='Envoyer →';b.disabled=false;e.target.reset();},3000);}
+</script>
+</body>
+</html>
